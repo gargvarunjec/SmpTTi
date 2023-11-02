@@ -1,23 +1,25 @@
-import React from 'react'
-import {BrowserRouter, Routes,Route } from 'react-router-dom';
-import Home from './pages/Home';
-import About from './pages/About';
-import Profile from './pages/Profile';
-import Signin from './pages/Signin';
-import SignOut from './pages/SignOut';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
+import SignUp from "./pages/SignUp";
+import Header from "./components/Header";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/About' element={<About/>} />
-        <Route path='/Profile' element={<Profile/>} />
-        <Route path='/SignIn' element={<Signin/>} />
-        <Route path='/SignOut' element={<SignOut/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/Sign-up" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

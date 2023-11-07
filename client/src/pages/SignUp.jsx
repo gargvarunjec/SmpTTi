@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ export default function SignUp() {
       }
       setLoading(false);
       setError(null);
+      
       navigate('/sign-in');
     } catch (error) {
       // console.log("hey");

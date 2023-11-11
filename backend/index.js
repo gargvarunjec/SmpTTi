@@ -1,13 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser());
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
@@ -22,7 +24,7 @@ app.listen(3000, () => {
 
 
 
-app.use('/api',userRouter);
+app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 
 app.use((err,req,res,next)=>{

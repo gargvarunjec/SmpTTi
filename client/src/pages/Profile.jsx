@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 import {
   getDownloadURL,
   getStorage,
@@ -120,7 +121,7 @@ export default function Profile() {
     }
   };
   return (
-    <div className="p-3 max-w-lg mx-auto ">
+    <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -178,6 +179,7 @@ export default function Profile() {
         >
           {loading ? "loading..." : "Update"}
         </button>
+        <Link to={"/create-listing"} className="text-lg bg-green-700 p-3 rounded-lg text-center text-white hover:opacity-95"> Create Listing</Link>
       </form>
       <div className="flex justify-between mt-5">
         <span

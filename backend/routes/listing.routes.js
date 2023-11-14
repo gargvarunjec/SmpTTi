@@ -1,9 +1,14 @@
 import express from "express";
-import { createListing, deleteListing } from "../controllers/lisiting.controller.js";
-import { verfiyUser } from "../utils/verifyUser.js";
+import {
+  createListing,
+  deleteListing,
+  updateListing,
+} from "../controllers/lisiting.controller.js";
+import { verifyUser } from "../utils/verifyUser.js";
 
 const router = express.Router();
 
-router.post("/create", verfiyUser, createListing);
-router.delete('/delete/:id',verfiyUser,deleteListing);
+router.post("/create", verifyUser, createListing);
+router.delete("/delete/:id", verifyUser, deleteListing);
+router.post("/update/:id", verifyUser, updateListing);
 export default router;

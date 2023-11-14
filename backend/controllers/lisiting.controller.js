@@ -9,3 +9,20 @@ export const createListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteListing = async (req, res, next) => {
+  const lisiting = await Listing.findById(req.params.id);
+
+  if (!lisiting) {
+    return next(errorHandler(404, "Listing Not Found"));
+  }
+  if (req.user.id !== lisiting.userRef) {
+    return next(errorHandler(404, "You can Only delete your own listings"));
+  }
+  try {
+    await Listing.findByIdAndDelete(req.params.id);
+    res.status(200).json('Listing has been deleted');
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,6 +1,8 @@
+// @ts-ignore
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
@@ -11,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/Sign-up" element={<SignUp />} />
         <Route path="/listing/:listingId" element={<Listing />} />
+        <Route path="/search" element={<Search />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-listing" element={<CreateListing />} />
@@ -31,6 +35,7 @@ function App() {
           />
         </Route>
       </Routes>
+      <ToastContainer position="top-right" autoClose={2000} />
     </BrowserRouter>
   );
 }

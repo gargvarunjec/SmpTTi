@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
-
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -34,13 +34,16 @@ export default function SignUp() {
         setError(data.message);
         return;
       }
+
       setLoading(false);
       setError(null);
-      
-      navigate('/sign-in');
+
+      toast.success("User Created Successfully");
+      navigate("/sign-in");
     } catch (error) {
       // console.log("hey");
       setLoading(false);
+      toast.error(error.message);
       setError(error.message);
     }
   };

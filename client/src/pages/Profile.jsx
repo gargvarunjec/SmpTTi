@@ -19,6 +19,7 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../redux/user/userSlice";
+import { toast } from "react-toastify";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -85,8 +86,12 @@ export default function Profile() {
       }
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
+      toast.success("User has been successfully Updated", {
+        className: "bg-slate-700 text-white",
+      });
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -103,8 +108,10 @@ export default function Profile() {
         return;
       }
       dispatch(deleteUserSuccess(data));
+      toast.success("User has been successfully deleted");
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -118,6 +125,9 @@ export default function Profile() {
         return;
       }
       dispatch(signOutSuccess(data));
+      toast.success("User Signed Out Successfully", {
+        className: "bg-slate-700 text-white",
+      });
     } catch (error) {
       dispatch(signOutFailure(error.message));
     }

@@ -14,8 +14,9 @@ export default function Search() {
   });
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
   const navigate = useNavigate();
-  console.log(listings);
+  console.log(showMore);
 
   useEffect(() => {
     // console.log(2);
@@ -50,9 +51,12 @@ export default function Search() {
 
     const fetchListings = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/listing/get?${searchQuery}`);
       const data = await res.json();
+      if (data.length > 8) setShowMore(true);
+      else setShowMore(false);
       setListings(data);
       setLoading(false);
     };
@@ -102,6 +106,19 @@ export default function Search() {
     urlParams.set("order", sidebardata.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length; // taaki isse aagr hmare paas n listings h toh hme ab n+1th listing chaiye
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+
+    if (data.length < 9) setShowMore(false);
+    setListings([...listings, ...data]); // kyuki hme aarray m hi add krrna h isliye dono m spread operetor lgadiay
   };
   return (
     <div className="flex flex-col md:flex-row">
@@ -224,6 +241,15 @@ export default function Search() {
             listings.map((listing) => (
               <ListingItem key={listing._id} listing={listing} />
             ))}
+
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className="text-green-700 hover:underline w-full text-center"
+            >
+              Show More{" "}
+            </button>
+          )}
         </div>
       </div>
     </div>

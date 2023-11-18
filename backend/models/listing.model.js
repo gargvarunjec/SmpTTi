@@ -59,5 +59,6 @@ const lisitingSchema = new mongoose.Schema(
 );
 
 const Listing = mongoose.model("Listing", lisitingSchema);
+Listing.createIndexes({ name: "text", description: "text", address: "text" });
 
 export default Listing;

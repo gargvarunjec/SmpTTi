@@ -89,19 +89,32 @@ export const getListings = async (req, res, next) => {
     const searchTerm = req.query.searchTerm || "";
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
-
-    const listings = await Listing.find({
-      name: { $regex: searchTerm, $options: "i" },
-      address: { $regex: searchTerm, $options: "i" },
-      description: { $regex: searchTerm, $options: "i" },
-      parking,
-      offer,
-      type,
-    })
-      .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
-
+    // console.log(searchTerm);
+    let listings;
+    if (searchTerm === "") {
+      listings = await Listing.find({
+        name: { $regex: searchTerm, $options: "i" },
+        address: { $regex: searchTerm, $options: "i" },
+        description: { $regex: searchTerm, $options: "i" },
+        parking,
+        offer,
+        type,
+      })
+        .sort({ [sort]: order })
+        .limit(limit)
+        .skip(startIndex);
+    } else {
+      listings = await Listing.find({
+        $text: { $search: searchTerm },
+        parking,
+        offer,
+        type,
+      })
+        .sort({ [sort]: order })
+        .limit(limit)
+        .skip(startIndex);
+    }
+    // console.log(listings);
     return res.status(200).json(listings);
   } catch (error) {
     next(error);

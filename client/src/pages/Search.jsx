@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
+import Spinner from "../components/Spinner";
 
 export default function Search() {
   const [sidebardata, setSideBarData] = useState({
@@ -231,11 +232,7 @@ export default function Search() {
           {!loading && listings.length === 0 && (
             <p className=" text-xl  text-slate-700">No Listing Found!!</p>
           )}
-          {loading && (
-            <p className="text-xl text-slate-700 text-center w-full">
-              Loading...
-            </p>
-          )}
+          {loading && <Spinner />}
           {!loading &&
             listings &&
             listings.map((listing) => (

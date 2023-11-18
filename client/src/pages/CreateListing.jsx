@@ -8,6 +8,7 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -31,7 +32,7 @@ export default function CreateListing() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  console.log(formData);
+  // console.log(formData);
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       const promises = [];
@@ -124,9 +125,9 @@ export default function CreateListing() {
     e.preventDefault();
     try {
       if (formData.imageUrls.length < 1)
-        return setError("You have to upload atleast 1 image");
+        return toast.error("You have to upload atleast 1 image");
       if (formData.regularPrice < formData.discountPrice)
-        return setError(
+        return toast.error(
           "The discounted price should be less than Regular price"
         );
       setLoading(true);
@@ -146,12 +147,12 @@ export default function CreateListing() {
 
       setLoading(false);
       if (data.success === false) {
-        setError(data.message);
+        toast.error(data.message);
       }
-
+      toast.success("Listing is created Successfully");
       navigate(`/listing/${data._id}`);
     } catch (error) {
-      setError(error.message);
+      toast.error(error.message);
       setLoading(false);
     }
   };
@@ -366,7 +367,6 @@ export default function CreateListing() {
           >
             {loading ? "Loading..." : "Create Listing "}
           </button>
-          {error && <p className="text-red-700 text-sm">{error}</p>}
         </div>
       </form>
     </main>

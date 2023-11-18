@@ -68,7 +68,9 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation>
+      <Swiper 
+               
+      navigation>
         {offerListings &&
           offerListings.length > 0 &&
           offerListings.map((listing) => (

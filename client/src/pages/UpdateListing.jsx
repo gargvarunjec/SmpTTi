@@ -8,6 +8,7 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -65,11 +66,11 @@ export default function UpdateListing() {
           setUploading(false);
         })
         .catch((err) => {
-          setImageUploadError("Image Upload failed (max 2mb per image)");
+          toast.error("Image Upload failed (max 2mb per image)");
           setUploading(false);
         });
     } else {
-      setImageUploadError("You can only Upload 6 images per listing");
+      toast.error("You can only Upload 6 images per listing");
       setUploading(false);
     }
   };
@@ -140,9 +141,9 @@ export default function UpdateListing() {
     e.preventDefault();
     try {
       if (formData.imageUrls.length < 1)
-        return setError("You have to upload atleast 1 image");
+        return toast.error("You have to upload atleast 1 image");
       if (formData.regularPrice < formData.discountPrice)
-        return setError(
+        return toast.error(
           "The discounted price should be less than Regular price"
         );
       setLoading(true);
@@ -162,12 +163,12 @@ export default function UpdateListing() {
 
       setLoading(false);
       if (data.success === false) {
-        setError(data.message);
+        toast.error(data.message);
       }
-
+      toast.success("Listing is Updated Successfully");
       navigate(`/listing/${data._id}`);
     } catch (error) {
-      setError(error.message);
+      toast.error(error.message);
       setLoading(false);
     }
   };
@@ -382,7 +383,6 @@ export default function UpdateListing() {
           >
             {loading ? "Updating..." : "Update Listing "}
           </button>
-          {error && <p className="text-red-700 text-sm">{error}</p>}
         </div>
       </form>
     </main>

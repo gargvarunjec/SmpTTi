@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
@@ -21,6 +21,7 @@ export default function Listing() {
   const [loading, setLoading] = useState(true);
   const [contact, setContact] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
     const fetchListing = async () => {
@@ -130,6 +131,14 @@ export default function Listing() {
                 className="bg-slate-700 rounded-lg text-white p-3 hover:opacity-95"
               >
                 Contact Landlord{" "}
+              </button>
+            )}
+            {currentUser && currentUser._id === listing.userRef && (
+              <button
+                onClick={() => navigate(`/update-listing/${params.listingId}`)}
+                className="bg-slate-700 rounded-lg text-white p-3 hover:opacity-95"
+              >
+                Update Listing{" "}
               </button>
             )}
             {contact && <Contact listing={listing} />}

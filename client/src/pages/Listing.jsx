@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Contact from "../components/Contact";
+import Spinner from "../components/Spinner";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -47,9 +48,7 @@ export default function Listing() {
   }, [params.listingId]);
   return (
     <main>
-      {loading && (
-        <p className="font-semibold text-2xl text-center my-7">Loading...</p>
-      )}
+      {loading && <Spinner />}
       {error && (
         <div className="flex flex-col ">
           <p className="text-center my-7 text-red-700 text-2xl">
@@ -140,6 +139,14 @@ export default function Listing() {
               >
                 Update Listing{" "}
               </button>
+            )}
+            {!currentUser && (
+              <Link to={"/sign-in"}>
+                <p className="text-blue-600 hover:underline">
+                  {" "}
+                  Sign in to contact the landlord{" "}
+                </p>
+              </Link>
             )}
             {contact && <Contact listing={listing} />}
           </div>
